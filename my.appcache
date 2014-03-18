@@ -1,0 +1,22 @@
+CACHE MANIFEST
+
+
+CACHE:
+
+# html files
+
+
+# css files
+
+
+# images
+static/cat.gif
+
+# js files
+
+static/catmeow.wav
+
+FALLBACK:
+
+
+NETWORK:

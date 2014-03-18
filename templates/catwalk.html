@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html manifest="my.appcache"> 
+ <head>
+  <meta charset="utf-8" />
+   <!--<script language="javascript" type="text/javascript">
+  function playSound(soundfile) {
+  document.getElementById("meow").innerHTML= "<embed src=\""
+    +soundfile+"\" hidden=\"true\" autostart=\"true\"
+    loop=\"false\" />";
+    }
+  </script> -->
+  <title>Cat Walk</title>
+ </head>
+  
+ <body>
+   
+  <audio id="mysound">
+  <source src="{{ url_for('static', filename='catmeow.wav') }}" type="audio/wav">
+  <!-- <source src="{{ url_for('static', filename='catmeow.mp3') }}" type="audio/mpeg"> -->
+  </audio> 
+   
+  <img onmouseover= "mysound.play();" style="position:absolute;" src="{{ url_for('static', filename='cat.gif') }}">
+   
+<div id="result" hidden></div>
+<div id="test" hidden></div>
+   
+  <script>
+var audio= document.getElementById("mysound");
+var img = document.getElementsByTagName('img')[0];
+
+img.style.left = '0px';
+
+if (typeof(Storage)!=="undefined")
+	{
+		if (localStorage.getItem("position") =="null")
+	    {
+	localStorage.setItem("position",img.style.left);
+	document.getElementById("result").innerHTML=localStorage.getItem("position");
+	console.log("first");
+	   }
+	else
+	{
+	localStorage.position= localStorage.getItem("position");
+	document.getElementById("result").innerHTML=localStorage.getItem("position");
+	console.log("second");
+	}
+        }
+else
+	 {
+  	document.getElementById("result").innerHTML="Data not stored in localstorage";
+  }
+var walkForwards = true;
+    
+function catWalk() {
+  var currentLeft = parseInt(localStorage.getItem("position"));
+
+  if (walkForwards && (currentLeft > (window.innerWidth-img.width))) {
+    walkForwards = false;
+  }
+  if (!walkForwards && (currentLeft <= 0)) {
+    walkForwards = true;
+  }
+  
+  if (walkForwards) {
+    img.style.left = (currentLeft + 10) + 'px';
+    localStorage.setItem("position",img.style.left);
+    document.getElementById("test").innerHTML=localStorage.getItem("position");
+  } else {
+    img.style.left = (currentLeft - 10) + 'px';
+    localStorage.setItem("position",img.style.left);
+    document.getElementById("test").innerHTML=localStorage.getItem("position");
+  }
+}
+    
+window.setInterval(catWalk, 50);
+  </script>
+
+ </body>
+</html>
